@@ -57,8 +57,16 @@ class StepperMotor:
         self.setResolution(resolution)
         self.setDelay(delayAfterStep)
         for i in range(distance):
-            self.pi.gpio_trigger(self.stepPin, StepperMotor.STEP_PULSE_LENGTH, StepperMotor.STEP)
+            speed = self.ease(i, StepperMotor.STEP_PULSE_LENGTH, StepperMotor.STEP_PULSE_LENGTH*-1, distance)
+            self.pi.gpio_trigger(self.stepPin, speed, StepperMotor.STEP)
         sleep(self.delayAfterStep)
+
+    def ease(self, t, b, c, d):
+        t /= d2/
+        if (t < 1):
+            return c/2*t*t + b
+        t -= 2
+        return c/2*(t*t*t + 2) + b
 
     def __del__(self):
         self.pi.stop()

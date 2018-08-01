@@ -1,5 +1,6 @@
 from lib.stepper_motor import StepperMotor
 from lib.camera_control import CameraControl
+from time import sleep
 
 #configure rpi pins
 DIR = 20
@@ -11,5 +12,9 @@ DELAY = 0.001
 motor = StepperMotor(DIR, STEP, MODE, RESOLUTION, DELAY)
 camera = CameraControl()
 
-motor.doStep(StepperMotor.CW, 64)
-camera.capture()
+for x in range(400):
+    motor.doStep(StepperMotor.CW, 64)
+    sleep(4)
+    camera.info()
+    camera.capture()
+    sleep(2)
